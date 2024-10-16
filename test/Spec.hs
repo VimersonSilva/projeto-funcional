@@ -2,6 +2,7 @@ import Test.HUnit
 import Student
 import Closest
 import FloorCeil
+import PilhaImpl
 import Control.Exception (try, evaluate, SomeException)
 
 test1 :: Test
@@ -59,6 +60,24 @@ testCeil = TestCase (assertEqual "Teste Ceil valor dentro do array" 7 (ceilF 5 [
 testCeil1 :: Test
 testCeil1 = TestCase (assertEqual "Teste Ceil valor fora do escopo do array" 1 (ceilF 0 [1, 3, 4, 7, 10]))
 
+-- Testes pilhas 
+
+testPilha :: Test
+testPilha = TestCase (assertEqual "Teste Pilha para o caso da pilha estar toda preenchida e só ter como trabalhar com o topo para manipular valores"
+ (Pilha [1, 3, 4, 11, 10] 5 3) (push (Pilha [1, 3, 4, 7, 10] 5 2) 11))
+
+testPilha2 :: Test
+testPilha2 = TestCase (assertEqual "Teste Pilha para o caso da pilha estar vazia" True (isEmpty (Pilha [1, 3, 4, 7, 10] 5 (-1))))
+
+testPilha3 :: Test
+testPilha3 = TestCase (assertEqual "Teste Pilha para o caso da pilha estar cheia" True (isFull (Pilha [1, 3, 4, 7, 10] 5 4)))
+
+testPilha4 :: Test
+testPilha4 = TestCase (assertEqual "Teste Pilha para o caso da pilha estar cheia" 7 (top (Pilha [1, 3, 4, 7, 10] 5 3)))
+
+testPilha5 :: Test
+testPilha5 = TestCase (assertEqual "Teste Pilha para o caso da pilha estar cheia" (Pilha [1, 3, 4, 7, 10] 5 2) (pop (Pilha [1, 3, 4, 7, 10] 5 3)))
+
 tests :: Test
 tests = TestList [TestLabel "Teste MediaCRA" test1,
                   TestLabel "Teste MediaCRA" test2,
@@ -67,13 +86,18 @@ tests = TestList [TestLabel "Teste MediaCRA" test1,
                   TestLabel "Teste GroupBy" testGroup,
                   TestLabel "Teste GroupBy" testGroup1,
                   TestLabel "Teste GroupBy" testGroup2,
-                  TestLabel "Teste GroupBy" testClosest,
-                  TestLabel "Teste GroupBy" testClosest2,
-                  TestLabel "Teste GroupBy" testClosest3,
-                  TestLabel "Teste GroupBy" testFloor,
-                  TestLabel "Teste GroupBy" testFloor1,
-                  TestLabel "Teste GroupBy" testCeil,
-                  TestLabel "Teste GroupBy" testCeil1]
+                  TestLabel "Teste Closest" testClosest,
+                  TestLabel "Teste Closest" testClosest2,
+                  TestLabel "Teste Closest" testClosest3,
+                  TestLabel "Teste Floor" testFloor,
+                  TestLabel "Teste Floor" testFloor1,
+                  TestLabel "Teste Ceil" testCeil,
+                  TestLabel "Teste Ceil" testCeil1,
+                  TestLabel "Teste Pilhas" testPilha,
+                  TestLabel "Teste Pilhas" testPilha2,
+                  TestLabel "Teste Pilhas" testPilha3,
+                  TestLabel "Teste Pilhas" testPilha4,
+                  TestLabel "Teste Pilhas" testPilha5]
 
 main :: IO Counts
 main = runTestTT tests
